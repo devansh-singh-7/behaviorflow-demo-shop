@@ -24,6 +24,10 @@ h1, h2, h3 { font-family: "Space Grotesk", sans-serif; margin: 0; }
 .eyebrow { color: var(--accent); font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; font-size: 12px; }
 .hero-wordmark { font-size: clamp(70px, 15vw, 176px); line-height: .79; letter-spacing: -10px; text-transform: uppercase; color: var(--accent); text-shadow: 3px 3px 0 var(--ink), 7px 7px 0 var(--accent-2); margin: 23px 0 34px; }
 .hero-wordmark em { color: var(--bubble-2); font-style: normal; }
+.bubble-wordmark { display: grid; width: fit-content; font-family: "Space Grotesk", sans-serif; font-weight: 700; line-height: .78; letter-spacing: -0.08em; text-transform: uppercase; color: var(--accent); text-shadow: 3px 3px 0 var(--ink), 7px 7px 0 var(--accent-2); }
+.bubble-wordmark-line:nth-child(2) { color: var(--bubble-2); }
+.bubble-wordmark-line:nth-child(3) { color: var(--accent-2); }
+.component-demo .bubble-wordmark { font-size: clamp(48px, 9vw, 96px); margin: 25px 0 45px; }
 .lead { font-size: 19px; line-height: 1.55; color: var(--muted); max-width: 550px; }
 .actions { display: flex; gap: 12px; align-items: center; margin-top: 28px; flex-wrap: wrap; }
 .btn { padding: 13px 19px; border-radius: 5px; background: var(--accent); color: #fff; font-weight: 700; display: inline-block; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); }
@@ -34,10 +38,13 @@ h1, h2, h3 { font-family: "Space Grotesk", sans-serif; margin: 0; }
 .pop-bubble.popped { animation: pop .22s ease-out forwards; }
 @keyframes pop { to { transform: scale(1.5); opacity: 0; } }
 .bubble-band { background: var(--ink); color: var(--bg); padding: 15px 0; overflow: hidden; white-space: nowrap; }
+.bubble-band-track { display: inline-flex; min-width: max-content; animation: band-scroll 28s linear infinite; }
 .bubble-band span { display: inline-block; margin: 0 14px; color: var(--accent-2); font-weight: 700; }
+@keyframes band-scroll { to { transform: translateX(-50%); } }
 .marquee-wrap { display: grid; gap: 10px; overflow: hidden; padding: 22px 0; transform: rotate(-3deg) scale(1.04); }
 .marquee { width: max-content; padding: 9px 20px; border: 2px solid var(--ink); background: var(--accent-2); font-weight: 700; animation: scroll 22s linear infinite; }
 .marquee.reverse { background: var(--bubble-2); animation-direction: reverse; }
+.marquee-wrap:hover .marquee { animation-play-state: paused; }
 @keyframes scroll { to { transform: translateX(-50%); } }
 .section { padding: 60px 0; }
 .sectionhead { display: flex; justify-content: space-between; align-items: end; margin-bottom: 25px; }
@@ -75,6 +82,17 @@ h1, h2, h3 { font-family: "Space Grotesk", sans-serif; margin: 0; }
 .token-strip { height: 70px; margin-bottom: 10px; }
 .lab { background: var(--ink); color: var(--bg); padding: 28px; }
 .order-card { max-width: 700px; text-align: center; }
+.component-demo { position: relative; min-height: 460px; overflow: hidden; margin: 30px 0 50px; padding: 25px; border: 2px solid var(--ink); background: var(--surface); }
+.component-demo .bubble-field { inset: 70px 0 180px; }
+.bubble-footer { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 20px; padding: 25px; background: var(--ink); color: var(--bg); }
+.bubble-footer-name { font: 700 20px "Space Grotesk", sans-serif; }
+.bubble-footer p, .bubble-footer small { margin: 0; }
+.bubble-footer-mark { grid-row: span 2; color: var(--accent-2); font-size: 55px; }
+.bubble-footer small { color: var(--muted); }
+.component-demo .bubble-footer { position: absolute; inset: auto 25px 25px; }
+.pop-bubble.bubble-1 { --bubble: var(--bubble-1); }
+.pop-bubble.bubble-2 { --bubble: var(--bubble-2); }
+.pop-bubble.bubble-3 { --bubble: var(--bubble-3); }
 .order-card .lead { margin-inline: auto; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; } .pop-bubble:hover { transform: none; } }
-@media (max-width: 760px) { .navlinks { gap: 8px; } .navlinks a:nth-child(2), .navlinks a:nth-child(3) { display: none; } .nav { min-height: 64px; } .shell { padding-inline: 16px; } .poster-hero { padding-top: 42px; } .hero-wordmark { font-size: clamp(60px, 19vw, 120px); letter-spacing: -5px; } .grid, .calendar, .split { grid-template-columns: 1fr; } .swatches { grid-template-columns: repeat(2, 1fr); } .bubble-field { opacity: .8; } .footer-content { flex-wrap: wrap; padding-block: 30px; } }
+@media (max-width: 760px) { .navlinks { gap: 8px; } .navlinks a:nth-child(2), .navlinks a:nth-child(3) { display: none; } .nav { min-height: 64px; } .shell { padding-inline: 16px; } .poster-hero { padding-top: 42px; } .hero-wordmark { font-size: clamp(60px, 19vw, 120px); letter-spacing: -5px; } .grid, .calendar, .split { grid-template-columns: 1fr; } .swatches { grid-template-columns: repeat(2, 1fr); } .bubble-field { opacity: .8; } .bubble-field .pop-bubble:nth-child(n+13) { display: none; } .footer-content { flex-wrap: wrap; padding-block: 30px; } .component-demo { min-height: 520px; padding: 16px; } .component-demo .bubble-footer { inset-inline: 16px; } }
