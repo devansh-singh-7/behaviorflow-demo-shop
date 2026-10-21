@@ -1,3 +1,12 @@
 "use client";
-import { useState } from "react"; import { products } from "../../lib/products"; import ProductCard from "../../components/ProductCard";
-export default function Shop(){const [cat,setCat]=useState("all");const shown=cat==="all"?products:products.filter(p=>p.category===cat);return <section className="shell section"><div className="pagehead"><div className="eyebrow">The happy shelf</div><h1>Things with <span style={{color:"var(--pink)"}}>personality.</span></h1><p className="lead">Useful, joyful, and always ready to brighten your corner.</p></div><div className="filters">{["all","wearables","home","paper"].map(c=><button className={`filter ${cat===c?"active":""}`} onClick={()=>setCat(c)} key={c}>{c[0].toUpperCase()+c.slice(1)}</button>)}</div><div className="grid">{shown.map(p=><ProductCard key={p.id} product={p}/>)}</div></section>}
+
+import { useState } from "react";
+import { products } from "../../lib/products";
+import ProductCard from "../../components/ProductCard";
+
+export default function Shop() {
+  const [category, setCategory] = useState("all");
+  const categories = ["all", ...Array.from(new Set(products.map((product) => product.category)))];
+  const shown = category === "all" ? products : products.filter((product) => product.category === category);
+  return <section className="shell section"><div className="pagehead"><div className="eyebrow">The happy shelf</div><h1>Things with personality.</h1><p className="lead">Twelve colorful objects for testing real journeys.</p></div><div className="filters" aria-label="Product categories">{categories.map((item) => <button key={item} className={`filter ${category === item ? "active" : ""}`} aria-pressed={category === item} onClick={() => setCategory(item)}>{item[0].toUpperCase() + item.slice(1)}</button>)}</div><div className="grid">{shown.map((product, index) => <ProductCard key={product.id} product={product} issue={`No. ${String(index + 1).padStart(2, "0")}`} />)}</div></section>;
+}

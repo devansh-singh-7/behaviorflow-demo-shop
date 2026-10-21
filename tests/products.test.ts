@@ -1,2 +1,2 @@
 import { describe,expect,it } from "vitest"; import { products,findProduct } from "../lib/products";
-describe("catalog",()=>{it("contains unique product ids",()=>expect(new Set(products.map(p=>p.id)).size).toBe(products.length));it("finds a known product",()=>expect(findProduct("cloud-nine")?.price).toBe(68));});
+describe("catalog",()=>{it("contains 12 products with unique ids and slugs",()=>{expect(products).toHaveLength(12);expect(new Set(products.map(p=>p.id)).size).toBe(products.length);expect(new Set(products.map(p=>p.slug)).size).toBe(products.length)});it("finds a known product priced in rupees",()=>expect(findProduct("cloud-nine")?.price).toBe(2499));});
