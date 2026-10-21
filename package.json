@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "journey-bot": "tsx scripts/journey-bot.ts"
   },
   "dependencies": {
     "next": "14.2.15",
@@ -19,7 +20,9 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@playwright/test": "1.48.2",
+    "@axe-core/playwright": "4.10.2",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.0.1",
     "@types/node": "22.7.9",
@@ -27,6 +30,7 @@
     "@types/react-dom": "18.3.0",
     "jsdom": "25.0.1",
     "typescript": "5.6.3",
-    "vitest": "2.1.4"
+    "vitest": "2.1.4",
+    "tsx": "4.19.2"
   }
 }
