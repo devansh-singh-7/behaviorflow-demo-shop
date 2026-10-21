@@ -47,7 +47,7 @@ h1, h2, h3 { font-family: "Space Grotesk", sans-serif; margin: 0; }
 .marquee-wrap:hover .marquee { animation-play-state: paused; }
 @keyframes scroll { to { transform: translateX(-50%); } }
 .section { padding: 60px 0; }
-.sectionhead { display: flex; justify-content: space-between; align-items: end; margin-bottom: 25px; }
+.sectionhead { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
 .sectionhead h2 { font-size: 40px; letter-spacing: -2px; }
 .issue { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: 1px; }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
