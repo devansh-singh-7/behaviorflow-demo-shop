@@ -1,3 +1,5 @@
+import { init as sdkInit, type BehaviorFlowClient } from "@devansh7/behaviorflow";
+
 export type EventName = "page_view" | "product_viewed" | "add_to_cart" | "checkout_started" | "purchase_completed";
 export type AnalyticsProperties = Record<string, string | number | boolean | null>;
 export type AnalyticsEvent = {
@@ -20,6 +22,7 @@ let sessionId = "";
 let anonymousId = "";
 let faults: FaultConfig = { f4a: false, f4b: false, f5: false, f6: 0, f3: "", f8: false };
 let groundTruthLast: string | null = null;
+let sdk: BehaviorFlowClient | null = null;
 
 function uuid() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -59,7 +62,10 @@ function sendBatch() {
   if (!batch.length) return;
   const send = () => {
     batch.forEach((event) => window.dispatchEvent(new CustomEvent("bf:analytics", { detail: event })));
-    void fetch("/api/mock-collector", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(batch) }).catch(() => { queue = [...batch, ...queue]; });
+    if (!sdk) return;
+    batch.forEach((event) => {
+      sdk?.track(event.event_name, event.properties);
+    });
   };
   if (faults.f6 > 0) window.setTimeout(send, faults.f6 * 1000); else send();
 }
@@ -78,6 +84,18 @@ export function init() {
     f3: params.get("f3") || localStorage.getItem("lab-f3") || "",
     f8: params.get("f8") === "on" || localStorage.getItem("lab-f8") === "on",
   };
+  sdk = sdkInit({
+    projectKey: process.env.NEXT_PUBLIC_BEHAVIORFLOW_PROJECT_KEY || "pop-supply-demo",
+    endpoint: "/api/mock-collector",
+    autoPageViews: false,
+    respectDoNotTrack: false,
+    debug: false,
+    beforeSend: (event) => {
+      const safeProperties = Object.fromEntries(Object.entries(event.properties).filter(([key]) => !/name|email|address|phone|card|message|text/i.test(key)));
+      return { ...event, properties: safeProperties };
+    },
+  });
+  sdk?.optIn();
   window.setInterval(sendBatch, 1000);
 }
 
